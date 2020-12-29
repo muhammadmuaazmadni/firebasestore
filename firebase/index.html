@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+</head>
+<body>
+    
+
+<input type="text" id="userinp">
+<button onclick="adddata()">add</button>
+
+
+<button id="getdata">Get Data</button>
+<div>
+    <h1>orders</h1>
+
+    <div id="orderlist">
+
+    </div>
+</div>
+
+
+
+<script>
+// Initialize Cloud Firestore through Firebase
+firebase.initializeApp({
+  apiKey: '### FIREBASE API KEY ###',
+  authDomain: '### FIREBASE AUTH DOMAIN ###',
+  projectId: '### CLOUD FIRESTORE PROJECT ID ###'
+});
+
+var db = firebase.firestore();
+
+function adddata(){
+
+    
+db.collection("orders").add({
+    username:document.getElementById("userinp").value,
+    orders:new Date().getTime(),
+    Username: "Muaaz",
+    first: "Alan",
+    middle: "Mathison",
+    last: "Turing",
+    born: 1912
+})
+.then(function(docRef) {
+    console.log("Document written with ID: ", docRef.id);
+})
+.catch(function(error) {
+    console.error("Error adding document: ", error);
+});
+}
+
+function getdata(){
+   
+    db.collection("users").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            document.getElementById("orderlist").innerHTML
+            console.log(`${doc.id} => ${doc.data()}`);
+        });
+    });
+    
+}
+</script>
+
+</body>
+</html>
